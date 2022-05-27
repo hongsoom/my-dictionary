@@ -1,8 +1,12 @@
-import { createStore, combineReducers } from "redux";
-import bucket from "./modules/bucket";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import words from "./modules/words";
 
-const rootReducer = combineReducers({ bucket });
+const middlewares = [thunk];
+const enhancer = applyMiddleware(...middlewares);
 
-const store = createStore(rootReducer);
+const rootReducer = combineReducers({ words });
+
+const store = createStore(rootReducer, enhancer);
 
 export default store;
