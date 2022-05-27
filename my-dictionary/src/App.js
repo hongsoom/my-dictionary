@@ -3,11 +3,6 @@ import React from "react"
 
 function App() {
 
-  React.useEffect(() => {
-    console.log(db);
-  }, []);
-
-
   return (
     <div className="App">
 
