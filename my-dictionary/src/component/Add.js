@@ -1,26 +1,34 @@
 import styled from 'styled-components';
+import React from "react";
 import { useHistory } from 'react-router-dom';
 import Header from "./Header";
 
 const Add = () => {
     const history = useHistory();
+    const word = React.useRef(null);
+    const mean = React.useRef(null);
+    const ex = React.useRef(null);
 
-    return (
+    console.log(word, mean, ex);
+
+    window.setTimeout(() => {console.log(word, mean, ex)}, 1000);
+
+    return (    
         <AddWrap>
             <Header />
             <Content>
                 <Title>단어 추가하기</Title>
                 <Word>
                     <label>단어</label> <br/>
-                    <input type="text" size="70" />
+                    <input type="text" size="70" ref={word} />
                 </Word>
                 <Mean>
                     <label>설명</label> <br/>
-                    <input type="text" size="70" />
+                    <input type="text" size="70" ref={mean} />
                 </Mean>
                 <Ex>
                     <label>예시</label> <br/>
-                    <input type="text" size="70" />
+                    <input type="text" size="70" ref={ex} />
                 </Ex>
                 <Button onClick={() => {
                     history.goBack();
