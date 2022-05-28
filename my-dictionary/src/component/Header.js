@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Header = () => {
     return (
        <Wrapper>
-           My Dictionary
+           나만의 단어장
        </Wrapper>
     )  
 }
@@ -18,9 +18,10 @@ const Wrapper = styled.div`
     width: 100%;
     top: 0px;
     z-index: 5;
-    color: black;
-    border-bottom: 1px solid #FFD9C0;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.20);
-    font-size: 20px;
+    color: white;
+    border-bottom: 3px solid #FAD4D4;
+    background-color: #FAD4D4;
+    font-size: 30px;
+    font-family: 'Jua', sans-serif;
 `;
 export default Header;
