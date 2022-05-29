@@ -22,6 +22,6 @@ const Wrapper = styled.div`
     border-bottom: 3px solid #FAD4D4;
     background-color: #FAD4D4;
     font-size: 30px;
-    font-family: 'Jua', sans-serif;
+    font-family: 'Do Hyeon', sans-serif;
 `;
 export default Header;
