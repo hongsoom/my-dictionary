@@ -1,17 +1,26 @@
 import styled from 'styled-components';
 import React from "react";
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux"; 
+import { createWords } from "../redux/modules/words"; // 액션생성함수
 import Header from "./Header";
 
 const Add = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const word = React.useRef(null);
     const mean = React.useRef(null);
     const ex = React.useRef(null);
 
-    console.log(word, mean, ex);
-
-    window.setTimeout(() => {console.log(word, mean, ex)}, 1000);
+    const addWordList = () => {
+        dispatch(createWords({
+            word : word.current.value,
+            mean : mean.current.value,
+            ex : ex.current.value,
+        }));
+        history.goBack();
+      };
 
     return (    
         <AddWrap>
@@ -20,19 +29,17 @@ const Add = () => {
                 <Title>단어 추가하기</Title>
                 <Word>
                     <label>단어</label> <br/>
-                    <input type="text" size="70" ref={word} />
+                    <input type="text" size="60" maxlength='8' ref={word} />
                 </Word>
                 <Mean>
                     <label>설명</label> <br/>
-                    <input type="text" size="70" ref={mean} />
+                    <input type="text" size="60" maxlength='30' ref={mean} />
                 </Mean>
                 <Ex>
                     <label>예시</label> <br/>
-                    <input type="text" size="70" ref={ex} />
+                    <input type="text" size="60" maxlength='30' ref={ex} />
                 </Ex>
-                <Button onClick={() => {
-                    history.goBack();
-                }}>
+                <Button onClick={addWordList}>
                     저장하기
                 </Button>
             </Content>
@@ -53,19 +60,22 @@ const Content = styled.div`
     flex-direction: column;
     display : flex;
     align-items: center;
+    border: 3px solid #EF9F9F;
+    border-radius: 10px;
 `;
 
 const Title = styled.div`
     margin : 20px;
     color: black;
-    font-size: 20px;
-    font-family: 'Jua', sans-serif;
+    font-size: 25px;
+    font-family: 'Do Hyeon', sans-serif;
 `;
 
 const Word = styled.div`
     margin-bottom : 50px;
     label {
-        font-family: 'Jua', sans-serif;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size : 20px;
     }
     input {
         border : none;
@@ -78,7 +88,8 @@ const Word = styled.div`
 const Mean = styled.div`
     margin-bottom : 50px;
     label {
-        font-family: 'Jua', sans-serif;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size : 20px;
     }
     input {
         border : none;
@@ -91,7 +102,8 @@ const Mean = styled.div`
 const Ex = styled.div`
     margin-bottom : 50px;
     label {
-        font-family: 'Jua', sans-serif;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size : 20px;
     }
     input {
         border : none;
@@ -112,7 +124,7 @@ const Button = styled.div`
     padding-top : 10px;
     cursor : pointer;
     border-radius: 5px;
-    font-family: 'Jua', sans-serif;
+    font-family: 'Do Hyeon', sans-serif;
 `;
 
 export default Add;
