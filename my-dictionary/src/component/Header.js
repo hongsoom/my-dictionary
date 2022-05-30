@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Header = () => {
+    const history = useHistory();
+
     return (
-       <Wrapper>
+       <Wrapper onClick={() => {
+            history.push("/");
+       }}>
            나만의 단어장
        </Wrapper>
     )  
@@ -23,5 +27,6 @@ const Wrapper = styled.div`
     background-color: #FAD4D4;
     font-size: 30px;
     font-family: 'Do Hyeon', sans-serif;
+    cursor:pointer;
 `;
 export default Header;
