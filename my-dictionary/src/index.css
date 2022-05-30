@@ -15,7 +15,7 @@ code {
     monospace;
 }
 
-.btn1 {
+.btn_check {
   position: absolute;
   right: 80px;
   border : none;
@@ -24,7 +24,7 @@ code {
   width : 30px;
   height : 20px;
 }
-.btn2 {
+.btn_edit {
   position: absolute;
   right: 45px;
   border : none;
@@ -33,7 +33,7 @@ code {
   width : 30px;
   height : 20px;
 }
-.btn3 {
+.btn_delete {
   position: absolute;
   right: 12px;
   border : none;
