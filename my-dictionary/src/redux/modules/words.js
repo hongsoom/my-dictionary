@@ -57,6 +57,14 @@ export const createWordFB = (word) => {
   }
 }
 
+export const updateWordFB = (word_index) => {
+
+}
+
+export const deleteWordFB = (word_index) => {
+
+}
+
 // reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {

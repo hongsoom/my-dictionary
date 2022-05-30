@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux"; 
-import { createWords } from "../redux/modules/words"; // 액션생성함수
+import { updateWordFB } from "../redux/modules/words"; // 액션생성함수
 import Header from "./Header";
 
 const Edit = () => {
@@ -14,7 +14,7 @@ const Edit = () => {
     const ex = React.useRef(null);
 
     const addWordList = () => {
-        dispatch(createWords({
+        dispatch(updateWordFB({
             word : word.current.value,
             mean : mean.current.value,
             ex : ex.current.value,
@@ -29,15 +29,15 @@ const Edit = () => {
                 <Title>단어 수정하기</Title>
                 <Word>
                     <label>단어</label> <br/>
-                    <input type="text" size="60" maxlength='8' ref={word} />
+                    <input type="text" size="60" maxLength='8' ref={word} />
                 </Word>
                 <Mean>
                     <label>설명</label> <br/>
-                    <input type="text" size="60" maxlength='30' ref={mean} />
+                    <input type="text" size="60" maxLength='30' ref={mean} />
                 </Mean>
                 <Ex>
                     <label>예시</label> <br/>
-                    <input type="text" size="60" maxlength='30' ref={ex} />
+                    <input type="text" size="60" maxLength='30' ref={ex} />
                 </Ex>
                 <Button onClick={addWordList}>
                     저장하기
