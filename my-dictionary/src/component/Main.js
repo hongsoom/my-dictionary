@@ -10,7 +10,7 @@ const Main = () => {
     return (
         <MainWrap>
             <Header />
-                <Content>hello</Content>
+                <Content><WordCard /></Content>
                 <AddBottom>
                     <button type="button" onClick={() => {
                         history.push("/Add");
@@ -28,11 +28,13 @@ const MainWrap = styled.div`
 
 const Content = styled.div`
     margin: 0 auto;
-    margin-top: 2rem;
-    width: 1000px;
+    margin-top: 50px;
+    width: 1225px;
     height: 900px;
     position: relative;
-    border: 1px solid black;
+    display : fiex;
+    align-content: flex-start;
+    justify-content: center;
 `;
 
 const AddBottom = styled.div`
