@@ -1,7 +1,7 @@
 import React from "react"
 import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loadWordFB, deleteWords } from "../src/redux/modules/words";
+import { loadWordFB } from "../src/redux/modules/words";
 import Main from "./component/Main";
 import Add from "./component/Add";
 import Edit from "./component/Edit";

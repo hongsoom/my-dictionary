@@ -1,5 +1,5 @@
 import {db} from "../../firebase"; 
-import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, orderBy, query, Timestamp } from "firebase/firestore";
 
 // Actions
 const LOAD   = 'words/LOAD';
@@ -42,26 +42,39 @@ export const loadWordFB = () => {
       word_list.push({id:doc.id, ...doc.data()});
     });
 
-    dispatch(loadWord(word_list));
     console.log('2 미들웨어', word_list);
+    dispatch(loadWord(word_list));
   }
 }
 
 export const createWordFB = (word) => {
   return async function (dispatch) {
-    const docRef = await addDoc(collection(db, "words"), word);
+    const docRef = await addDoc(collection(db, "words"), word );
     const word_data = {id: docRef.id, ...word};
 
-    dispatch(createWord(word_data))
     console.log('4 미들웨어', word_data);
+    dispatch(createWord(word_data));
   }
 }
 
 export const updateWordFB = (word_index) => {
+  return function(dispatch) {
 
+  }
 }
 
-export const deleteWordFB = (word_index) => {
+export const deleteWordFB = (word_id) => {
+  return async function(dispatch, getState) {
+    const docRef = doc(db, "words", word_id);
+    await deleteDoc(docRef);
+
+    const _word_list = getState().words.list;
+    const word_index = _word_list.findIndex((i) => {
+      return i.id === word_id;
+    });
+    
+    dispatch(deleteWord(word_index));
+}
 
 }
 
