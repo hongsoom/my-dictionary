@@ -12,12 +12,14 @@ const Add = () => {
     const word = React.useRef(null);
     const mean = React.useRef(null);
     const ex = React.useRef(null);
+    const read = React.useRef(null);
 
     const addWordList = () => {
         dispatch(createWordFB({
             word : word.current.value,
             mean : mean.current.value,
             ex : ex.current.value,
+            read : read.current.value,
         }));
         history.goBack();
       };
@@ -39,6 +41,10 @@ const Add = () => {
                     <label>예시</label> <br/>
                     <input type="text" size="60" maxlength='50' ref={ex} />
                 </Ex>
+                <Read>
+                    <label>해석</label> <br/>
+                    <input type="text" size="60" maxlength='50' ref={read} />
+                </Read>
                 <Button onClick={addWordList}>
                     저장하기
                 </Button>
@@ -55,7 +61,7 @@ const AddWrap = styled.div`
 const Content = styled.div`
     margin: 2rem auto;
     width: 500px;
-    height: 500px;
+    height: 600px;
     position: relative;
     flex-direction: column;
     display : flex;
@@ -100,6 +106,20 @@ const Mean = styled.div`
 `;
 
 const Ex = styled.div`
+    margin-bottom : 50px;
+    label {
+        font-family: 'Do Hyeon', sans-serif;
+        font-size : 20px;
+    }
+    input {
+        border : none;
+        border-bottom : 2px solid #FAD4D4;
+        background-color: transparent;
+        height: 30px;
+    }
+`;
+
+const Read = styled.div`
     margin-bottom : 50px;
     label {
         font-family: 'Do Hyeon', sans-serif;
