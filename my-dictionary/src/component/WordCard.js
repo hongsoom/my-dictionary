@@ -26,8 +26,7 @@ const WordCard = (props) => {
                             <button className="btn_edit" onClick={() => { history.push('/Edit/' + index);}}><BsPencilSquare size="25"/></button>
                             <button className="btn_delete" onClick={() => { 
                                 dispatch(deleteWordFB(list.id));
-                                window.alert("삭제했습니다!");
-                            }}><BsTrash size="25"/></button>
+                                window.alert("삭제했습니다!");}}><BsTrash size="25"/></button>
                         <Mean>{list.mean}</Mean>
                         <Ex style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.ex}</Ex>
                         <Read style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.read}</Read>
