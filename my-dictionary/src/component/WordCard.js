@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteWordFB } from "../redux/modules/words";
+import { updateWordFB, deleteWordFB } from "../redux/modules/words";
 import styled from "styled-components";
 import { BsCheckLg,BsPencilSquare,BsTrash } from "react-icons/bs";
 
@@ -11,25 +11,22 @@ const WordCard = (props) => {
 
     const data = useSelector((state) => state.words.list);
 
-    const [isClicked, setIsCilcked] = useState(false);
-    const onClick = () => {
-        setIsCilcked(!isClicked); 
-      };
-
     return (
         <Cards>
             {data.map ((list, index) => {
                 return (
-                    <CardBox key={index} id={list.id}>
+                    <CardBox key={index} id={list.id} completed={list.completed}>
                         <Word>{list.word}</Word>
-                            <button className="btn_check" onClick={onClick}><BsCheckLg size="25"/></button>
-                            <button className="btn_edit" onClick={() => { history.push('/Edit/' + index);}}><BsPencilSquare size="25"/></button>
-                            <button className="btn_delete" onClick={() => { 
+                            <button type="button" className="btn_check" onClick={() => {
+                                dispatch(updateWordFB(list, list.id));
+                             }}><BsCheckLg size="25"/></button>
+                            <button type="button" className="btn_edit" onClick={() => { history.push('/Edit/' + index);}}><BsPencilSquare size="25"/></button>
+                            <button type="button" className="btn_delete" onClick={() => { 
                                 dispatch(deleteWordFB(list.id));
                                 window.alert("삭제했습니다!");}}><BsTrash size="25"/></button>
                         <Mean>{list.mean}</Mean>
-                        <Ex style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.ex}</Ex>
-                        <Read style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.read}</Read>
+                        <Ex completed={list.completed}>{list.ex}</Ex>
+                        <Read completed={list.completed}>{list.read}</Read>
                     </CardBox>
                 )
         })}
@@ -51,6 +48,8 @@ const CardBox = styled.div`
     width : 350px;
     height : 150px;
     padding: 20px;
+    background-color: ${(props) => (props.completed ? "#F47C7C" : "#FFFFFF")};
+    color: ${(props) => (props.completed ? "#FFFFFF" : "black")};
 `;
 
 const Word = styled.div`
@@ -70,12 +69,12 @@ const Mean = styled.div`
 const Ex = styled.div`
     font-size : 20px;
     font-family: 'Do Hyeon', sans-serif;
-    color : #7FB5FF;
+    color: ${(props) => (props.completed ? "#FFFFFF" : "#7FB5FF")};
 `;
 
 const Read = styled.div`
     font-size : 20px;
     font-family: 'Do Hyeon', sans-serif;
-    color : #7FB5FF;
+    color: ${(props) => (props.completed ? "#FFFFFF" : "#7FB5FF")};
 `;
 export default WordCard;
