@@ -20,6 +20,7 @@ const Add = () => {
             mean : mean.current.value,
             ex : ex.current.value,
             read : read.current.value,
+            completed : false,
         }));
         history.goBack();
       };
