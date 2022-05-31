@@ -5,19 +5,21 @@ import { useDispatch } from "react-redux";
 import { updateWordFB } from "../redux/modules/words"; // 액션생성함수
 import Header from "./Header";
 
-const Edit = () => {
+const Edit = ({data}) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
     const word = React.useRef(null);
     const mean = React.useRef(null);
     const ex = React.useRef(null);
+    const read = React.useRef(null);
 
-    const addWordList = () => {
+    const updateWordList = () => {
         dispatch(updateWordFB({
             word : word.current.value,
             mean : mean.current.value,
             ex : ex.current.value,
+            read : read.current.value,
         }));
         history.goBack();
       };
@@ -29,17 +31,21 @@ const Edit = () => {
                 <Title>단어 수정하기</Title>
                 <Word>
                     <label>단어</label> <br/>
-                    <input type="text" size="60" maxLength='8' ref={word} />
+                    <input type="text" size="60" maxLength='8' ref={word}>{data.word}</input>
                 </Word>
                 <Mean>
                     <label>설명</label> <br/>
-                    <input type="text" size="60" maxLength='30' ref={mean} />
+                    <input type="text" size="60" maxLength='30' ref={mean}>{data.mean}</input>
                 </Mean>
                 <Ex>
                     <label>예시</label> <br/>
-                    <input type="text" size="60" maxLength='30' ref={ex} />
+                    <input type="text" size="60" maxLength='30' ref={ex}>{data.ex}</input>
                 </Ex>
-                <Button onClick={addWordList}>
+                <Read>
+                    <label>해석</label> <br/>
+                    <input type="text" size="60" maxlength='50' ref={read}>{data.read}</input>
+                </Read>
+                <Button onClick={updateWordList}>
                     저장하기
                 </Button>
             </Content>
@@ -55,7 +61,7 @@ const AddWrap = styled.div`
 const Content = styled.div`
     margin: 2rem auto;
     width: 500px;
-    height: 500px;
+    height: 600px;
     position: relative;
     flex-direction: column;
     display : flex;
@@ -100,6 +106,20 @@ const Mean = styled.div`
 `;
 
 const Ex = styled.div`
+    margin-bottom : 50px;
+    label {
+        font-family: 'Do Hyeon', sans-serif;
+        font-size : 20px;
+    }
+    input {
+        border : none;
+        border-bottom : 2px solid #FAD4D4;
+        background-color: transparent;
+        height: 30px;
+    }
+`;
+
+const Read = styled.div`
     margin-bottom : 50px;
     label {
         font-family: 'Do Hyeon', sans-serif;
