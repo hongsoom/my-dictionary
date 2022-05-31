@@ -1,9 +1,10 @@
 import {db} from "../../firebase"; 
-import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, orderBy, query, Timestamp } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Actions
 const LOAD   = 'words/LOAD';
 const CREATE = 'words/CREATE';
+const MODIFY = 'words/MODIFY';
 const UPDATE = 'words/UPDATE';
 const DELETE = 'words/DELETE';
 
@@ -14,13 +15,15 @@ const initialState = {
 
 // Action Creators
 export function loadWord(word_list) {
-  console.log('1 mount', word_list);
   return { type: LOAD, word_list };
 }
 
 export function createWord(word) {
-  console.log('5 객체생성', word);
   return { type: CREATE, word };
+}
+
+export function modifyWord(word_index) {
+  return { type: MODIFY, word_index };
 }
 
 export function updateWord(word_index) {
@@ -41,8 +44,7 @@ export const loadWordFB = () => {
     word_data.forEach((doc) => {
       word_list.push({id:doc.id, ...doc.data()});
     });
-
-    console.log('2 미들웨어', word_list);
+  
     dispatch(loadWord(word_list));
   }
 }
@@ -52,14 +54,36 @@ export const createWordFB = (word) => {
     const docRef = await addDoc(collection(db, "words"), word );
     const word_data = {id: docRef.id, ...word};
 
-    console.log('4 미들웨어', word_data);
     dispatch(createWord(word_data));
   }
 }
 
-export const updateWordFB = (word_index) => {
-  return function(dispatch) {
+export const modifyWordFB = (word, word_id) => {
+  return async function(dispatch,getState) {
+    const docRef = doc(db, "words", word_id);
+    await updateDoc(docRef, ...word);
 
+    const _word_list = getState().words.list;
+    const word_index = _word_list.findIndex((l) => {
+      return l.id === word_id;
+    })
+
+    dispatch(modifyWord(word_index));
+
+  }
+}
+
+export const updateWordFB = (word, word_id) => {
+  return async function(dispatch, getState) {
+    const docRef = doc(db, "words", word_id);
+    await updateDoc(docRef, {completed: !word.completed});
+
+    const _word_list = getState().words.list;
+    const word_index = _word_list.findIndex((l) => {
+      return l.id === word_id;
+    })
+
+    dispatch(updateWord(word_index));
   }
 }
 
@@ -82,16 +106,26 @@ export const deleteWordFB = (word_id) => {
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
       case "words/LOAD":
-        console.log('3 리듀서', action.word_list);
         return {list : action.word_list};
   
       case "words/CREATE": {
         const new_word_list = [...state.list, action.word];
-        console.log('6 리듀서', new_word_list);
         return { list: new_word_list };
       }
-    
-      case "bucket/DELETE": {
+
+      case "words/MODIFY": {
+        const new_word_list = state.list.map((a, idx) => 
+          parseInt(action.word_index) === idx ? { ...a, ...action.word } : a);
+        return { ...state, list: new_word_list };
+      }
+      
+      case "words/UPDATE": {
+        const new_word_list = state.list.map((b, idx) => 
+          parseInt(action.word_index) === idx ? { ...b, completed: !b.completed } : b);
+        return { ...state, list: new_word_list };
+      }
+
+      case "words/DELETE": {
       const new_word_list = state.list.filter((l, idx) => {
         return parseInt(action.word_index) !== idx;
       });
