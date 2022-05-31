@@ -1,14 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeWords } from "../redux/modules/words";
+import { deleteWordFB } from "../redux/modules/words";
 import styled from "styled-components";
 import { BsCheckLg,BsPencilSquare,BsTrash } from "react-icons/bs";
 
 const WordCard = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const params = useParams();
 
     const data = useSelector((state) => state.words.list);
 
@@ -20,14 +19,19 @@ const WordCard = (props) => {
     return (
         <Cards style={{color : isClicked ? ('#FFFFFF') : ('black')}}>
             {data.map ((list, index) => {
+                console.log(list.id);
                 return (
-                    <CardBox key={index} style={{backgroundColor : isClicked ? ('#F47C7C') : ('#FFFFFF')}}>
+                    <CardBox key={index} id={list.id} style={{backgroundColor : isClicked ? ('#F47C7C') : ('#FFFFFF')}}>
                         <Word>{list.word}</Word>
-                            <button className="btn1" onClick={onClick}><BsCheckLg size="25"/></button>
-                            <button className="btn2" onClick={() => { history.push('/Edit');}}><BsPencilSquare size="25"/></button>
-                            <button className="btn3" onClick={() => { alert("삭제했습니다!");}}><BsTrash size="25"/></button>
+                            <button className="btn_check" onClick={onClick}><BsCheckLg size="25"/></button>
+                            <button className="btn_edit" onClick={() => { history.push('/Edit');}}><BsPencilSquare size="25"/></button>
+                            <button className="btn_delete" onClick={() => { 
+                                dispatch(deleteWordFB(list.id));
+                                window.alert("삭제했습니다!");
+                                window.location.reload();}}><BsTrash size="25"/></button>
                         <Mean>{list.mean}</Mean>
-                        <Ex style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}} >{list.ex}</Ex>
+                        <Ex style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.ex}</Ex>
+                        <Read style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.read}</Read>
                     </CardBox>
                 )
         })}
@@ -66,7 +70,12 @@ const Mean = styled.div`
 `;
 
 const Ex = styled.div`
-    margin-bottom : 20px;
+    font-size : 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    color : #7FB5FF;
+`;
+
+const Read = styled.div`
     font-size : 20px;
     font-family: 'Do Hyeon', sans-serif;
     color : #7FB5FF;
