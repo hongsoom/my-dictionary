@@ -17,18 +17,17 @@ const WordCard = (props) => {
       };
 
     return (
-        <Cards style={{color : isClicked ? ('#FFFFFF') : ('black')}}>
+        <Cards>
             {data.map ((list, index) => {
-                console.log(list.id);
                 return (
-                    <CardBox key={index} id={list.id} style={{backgroundColor : isClicked ? ('#F47C7C') : ('#FFFFFF')}}>
+                    <CardBox key={index} id={list.id}>
                         <Word>{list.word}</Word>
                             <button className="btn_check" onClick={onClick}><BsCheckLg size="25"/></button>
-                            <button className="btn_edit" onClick={() => { history.push('/Edit');}}><BsPencilSquare size="25"/></button>
+                            <button className="btn_edit" onClick={() => { history.push('/Edit/' + index);}}><BsPencilSquare size="25"/></button>
                             <button className="btn_delete" onClick={() => { 
                                 dispatch(deleteWordFB(list.id));
                                 window.alert("삭제했습니다!");
-                                window.location.reload();}}><BsTrash size="25"/></button>
+                            }}><BsTrash size="25"/></button>
                         <Mean>{list.mean}</Mean>
                         <Ex style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.ex}</Ex>
                         <Read style={{color : isClicked ? ('#FFFFFF') : ('#7FB5FF')}}>{list.read}</Read>
