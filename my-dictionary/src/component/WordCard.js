@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateWordFB, deleteWordFB } from "../redux/modules/words";
+import { loadWordFB,updateWordFB, deleteWordFB } from "../redux/modules/words";
 import styled from "styled-components";
 import { BsCheckLg,BsPencilSquare,BsTrash } from "react-icons/bs";
 
@@ -53,8 +53,9 @@ const CardBox = styled.div`
 `;
 
 const Word = styled.div`
+    max-width : 100%;
     display : inline-block;
-    margin-bottom : 20px;
+    margin-bottom : 10px;
     margin-right : 50px;
     font-size : 25px;
     font-family: 'Do Hyeon', sans-serif;
@@ -64,16 +65,17 @@ const Mean = styled.div`
     margin-bottom : 20px;
     font-size : 20px;
     font-family: 'Do Hyeon', sans-serif;
+    margin-bottom : 5px;
 `;
 
 const Ex = styled.div`
-    font-size : 20px;
+    font-size : 17px;
     font-family: 'Do Hyeon', sans-serif;
     color: ${(props) => (props.completed ? "#FFFFFF" : "#7FB5FF")};
 `;
 
 const Read = styled.div`
-    font-size : 20px;
+    font-size : 17px;
     font-family: 'Do Hyeon', sans-serif;
     color: ${(props) => (props.completed ? "#FFFFFF" : "#7FB5FF")};
 `;
