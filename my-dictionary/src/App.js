@@ -13,6 +13,9 @@ function App() {
 
   React.useEffect (() => {
     dispatch(loadWordFB());
+    return () => {
+      console.log("Clean");
+    }
   }, []);
 
   return (
