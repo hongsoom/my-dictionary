@@ -44,7 +44,11 @@ export const loadWordFB = () => {
     word_data.forEach((doc) => {
       word_list.push({id:doc.id, ...doc.data()});
     });
-  
+
+    word_list.sort((a,b) => {
+      return b.date - a.date;
+    })
+
     dispatch(loadWord(word_list));
   }
 }
@@ -110,6 +114,9 @@ export default function reducer(state = initialState, action = {}) {
   
       case "words/CREATE": {
         const new_word_list = [...state.list, action.word];
+        new_word_list.sort((a,b) => {
+          return b.date - a.date;
+        })
         return { list: new_word_list };
       }
 
