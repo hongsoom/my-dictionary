@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux"; 
-import { createWordFB } from "../redux/modules/words"; // 액션생성함수
+import { createWordFB } from "../redux/modules/words"; 
 import Header from "./Header";
 
 const Add = () => {
@@ -21,6 +21,7 @@ const Add = () => {
             ex : ex.current.value,
             read : read.current.value,
             completed : false,
+            date: Date.now(),
         }));
         history.goBack();
       };
@@ -60,8 +61,8 @@ const AddWrap = styled.div`
 `;
 
 const Content = styled.div`
+    max-width: 450px;
     margin: 2rem auto;
-    width: 500px;
     height: 600px;
     position: relative;
     flex-direction: column;
