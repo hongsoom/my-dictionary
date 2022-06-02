@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadWordFB,updateWordFB, deleteWordFB } from "../redux/modules/words";
 import styled from "styled-components";
-import { BsCheckLg,BsPencilSquare,BsTrash } from "react-icons/bs";
+import { BsCheckCircle, BsCheckCircleFill, BsPencilSquare, BsTrash } from "react-icons/bs";
 
 const WordCard = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
     const data = useSelector((state) => state.words.list);
-
+  
     return (
         <Cards>
             {data.map ((list, index) => {
@@ -19,8 +19,8 @@ const WordCard = (props) => {
                         <Word>{list.word}</Word>
                             <button type="button" className="btn_check" onClick={() => {
                                 dispatch(updateWordFB(list, list.id));
-                             }}><BsCheckLg size="25"/></button>
-                            <button type="button" className="btn_edit" onClick={() => { history.push('/Edit/' + index);}}><BsPencilSquare size="25"/></button>
+                             }}>{list.completed ? <BsCheckCircleFill size="25"/> : <BsCheckCircle size="25"/> }</button>
+                            <button type="button" className="btn_edit" onClick={() => { history.push('/Edit/' + index + '/' + `${list.id}`);}}><BsPencilSquare size="25"/></button>
                             <button type="button" className="btn_delete" onClick={() => { 
                                 dispatch(deleteWordFB(list.id));
                                 window.alert("삭제했습니다!");}}><BsTrash size="25"/></button>
@@ -38,14 +38,21 @@ const Cards = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    align-content: flex-start;
+    align-content: center;
+    margin 0 30px;
 `;
 
 const CardBox = styled.div`
     border: 2px solid #F47C7C;
     border-radius: 10px;
+    width: calc((100% - 180px) / 3);
+    @media screen and (max-width: 1000px) {
+      width: calc((100% - 120px) / 2);
+    }
+    @media screen and (max-width: 600px) {
+      width: calc(100% - 60px);
+    }
     position: relative;
-    width : 350px;
     height : 150px;
     padding: 20px;
     background-color: ${(props) => (props.completed ? "#F47C7C" : "#FFFFFF")};

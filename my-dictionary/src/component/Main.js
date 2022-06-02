@@ -27,14 +27,15 @@ const MainWrap = styled.div`
 `;
 
 const Content = styled.div`
-    margin: 0 auto;
+    margin : 0 auto;
     margin-top: 50px;
-    width: 1225px;
+    max-width : 1300px;
     height: 900px;
     position: relative;
     display : fiex;
+    flex-wrap: wrap;
+    flex-direction : row;
     align-content: flex-start;
-    justify-content: center;
 `;
 
 const AddBottom = styled.div`
