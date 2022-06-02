@@ -1,26 +1,32 @@
 import styled from 'styled-components';
 import React from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux"; 
-import { updateWordFB } from "../redux/modules/words"; // 액션생성함수
+import { modifyWordFB } from "../redux/modules/words";
 import Header from "./Header";
 
-const Edit = ({data}) => {
+const Edit = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    
+    const word_data = props.data;
+    const word_index = useParams().index;
+    const word_id = useParams().id;
 
     const word = React.useRef(null);
     const mean = React.useRef(null);
     const ex = React.useRef(null);
     const read = React.useRef(null);
 
-    const updateWordList = () => {
-        dispatch(updateWordFB({
+    const modifyWordList = () => {
+        dispatch(modifyWordFB({
             word : word.current.value,
             mean : mean.current.value,
             ex : ex.current.value,
             read : read.current.value,
-        }));
+            completed : false,
+            date: Date.now(),
+        }, word_id));
         history.goBack();
       };
 
@@ -31,26 +37,25 @@ const Edit = ({data}) => {
                 <Title>단어 수정하기</Title>
                 <Word>
                     <label>단어</label> <br/>
-                    <input type="text" size="60" maxLength='8' ref={word}>{data.word}</input>
+                    <input type="text" defaultValue={word_data[word_index].word} size="60" maxLength='8' ref={word}></input>
                 </Word>
                 <Mean>
                     <label>설명</label> <br/>
-                    <input type="text" size="60" maxLength='30' ref={mean}>{data.mean}</input>
+                    <input type="text" defaultValue={word_data[word_index].mean} size="60" maxLength='30' ref={mean}></input>
                 </Mean>
                 <Ex>
                     <label>예시</label> <br/>
-                    <input type="text" size="60" maxLength='30' ref={ex}>{data.ex}</input>
+                    <input type="text" defaultValue={word_data[word_index].ex} size="60" maxLength='30' ref={ex}></input>
                 </Ex>
                 <Read>
                     <label>해석</label> <br/>
-                    <input type="text" size="60" maxlength='50' ref={read}>{data.read}</input>
+                    <input type="text" defaultValue={word_data[word_index].read} size="60" maxLength='50' ref={read}></input>
                 </Read>
-                <Button onClick={updateWordList}>
-                    저장하기
+                <Button onClick={modifyWordList}>
+                    수정하기
                 </Button>
             </Content>
         </AddWrap>
-
     )
 }
 
@@ -60,7 +65,7 @@ const AddWrap = styled.div`
 
 const Content = styled.div`
     margin: 2rem auto;
-    width: 500px;
+    max-width: 450px;
     height: 600px;
     position: relative;
     flex-direction: column;
