@@ -23,7 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/Add" component={Add} />
-        <Route path="/Edit/:index" exact>
+        <Route path="/Edit/:index/:id" exact>
           <Edit data={data}/>
           </Route>
       </Switch>
