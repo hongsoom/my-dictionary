@@ -1,5 +1,5 @@
 import {db} from "../../firebase"; 
-import { collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Actions
 const LOAD   = 'words/LOAD';
@@ -22,8 +22,8 @@ export function createWord(word) {
   return { type: CREATE, word };
 }
 
-export function modifyWord(word_index) {
-  return { type: MODIFY, word_index };
+export function modifyWord(word, word_index) {
+  return { type: MODIFY, word, word_index };
 }
 
 export function updateWord(word_index) {
@@ -55,7 +55,7 @@ export const loadWordFB = () => {
 
 export const createWordFB = (word) => {
   return async function (dispatch) {
-    const docRef = await addDoc(collection(db, "words"), word );
+    const docRef = await addDoc(collection(db, "words"), word);
     const word_data = {id: docRef.id, ...word};
 
     dispatch(createWord(word_data));
@@ -65,15 +65,19 @@ export const createWordFB = (word) => {
 export const modifyWordFB = (word, word_id) => {
   return async function(dispatch,getState) {
     const docRef = doc(db, "words", word_id);
-    await updateDoc(docRef, ...word);
+    await updateDoc(docRef, {
+      word : word.word,
+      mean : word.mean,
+      ex : word.ex,
+      read : word.read,
+    });
 
     const _word_list = getState().words.list;
     const word_index = _word_list.findIndex((l) => {
       return l.id === word_id;
     })
-
-    dispatch(modifyWord(word_index));
-
+    
+    dispatch(modifyWord(word, word_index));
   }
 }
 
@@ -102,8 +106,7 @@ export const deleteWordFB = (word_id) => {
     });
     
     dispatch(deleteWord(word_index));
-}
-
+  }
 }
 
 // reducer
